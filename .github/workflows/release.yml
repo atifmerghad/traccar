@@ -54,4 +54,6 @@ jobs:
           mkdir -p ~/.ssh
           echo "$TRACCAR_VM_SSH_KEY" > ~/.ssh/traccar_vm
           chmod 600 ~/.ssh/traccar_vm
+          ssh-keyscan -H 35.192.21.69 >> ~/.ssh/known_hosts
           scp -i ~/.ssh/traccar_vm traccar-*.zip atifmerghad@35.192.21.69:/home/atifmerghad/files
+
