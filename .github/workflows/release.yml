@@ -56,4 +56,16 @@ jobs:
           chmod 600 ~/.ssh/traccar_vm
           ssh-keyscan -H 35.192.21.69 >> ~/.ssh/known_hosts
           scp -i ~/.ssh/traccar_vm traccar-*.zip atifmerghad@35.192.21.69:/home/atifmerghad/files
-
+      - name: Deploy Traccar on VM
+        env:
+          TRACCAR_VM_SSH_KEY: ${{ secrets.TRACCAR_VM_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$TRACCAR_VM_SSH_KEY" > ~/.ssh/traccar_vm
+          chmod 600 ~/.ssh/traccar_vm
+          ssh-keygen -R 35.192.21.69 || true
+          ssh-keyscan -H 35.192.21.69 >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/traccar_vm atifmerghad@35.192.21.69 << EOF
+            chmod +x /home/atifmerghad/traccar/deploy_traccar.sh
+            bash /home/atifmerghad/traccar/deploy_traccar.sh
+          EOF
