@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""
+This script simulates a fleet of vehicles on a road trip in Morocco.
+It uses the Traccar API to send position updates to a Traccar server.
+"""
 import datetime
 import http.client as httplib
 import json
